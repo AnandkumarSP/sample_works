@@ -7,22 +7,38 @@ from descriptors import MyTrait
 
 
 class DescriptorOwner(type):
+        
+    def __call__(cls, *args, **kwargs):
+        instance = super(DescriptorOwner, cls).__call__(*args, **kwargs)
+        return instance
+    
     def __new__(cls, name, bases, attrs):
         # find all descriptors, auto-set their labels
+        if '__class_traits' in attrs:
+            raise Exception("Overriding '__class_traits' will not get you expected results.")
+        attrs['__class_traits'] = {}
         for n, v in attrs.items():
             if isinstance(v, MyTrait):
                 v.label = n
+                attrs['__class_traits'][v.label] = v
             elif isinstance(v, type) and MyTrait in v.__bases__:
                 attrs[n] = v()
                 attrs[n].label = n
+                attrs['__class_traits'][attrs[n].label] = attrs[n]
         return super(DescriptorOwner, cls).__new__(cls, name, bases, attrs)
 
 class MyTraitClass(object):
     __metaclass__ = DescriptorOwner
-    
+
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
+    
+    def __getattribute__(self, name):
+        if name in self.__class_traits:
+            return self.__class_traits[name]
+        else:
+            return object.__getattribute__(self, name)
     
     def add_mytrait_attribute(self, name, value, trait_type=None):
         #a.add_mytrait_attribute("varc", 3, MyInt)

@@ -8,20 +8,44 @@ class MyTrait(object):
     type = None
     label = None
 
-    def __init__(self, value=None, **kwargs):
+    def __init__(self, value=None):
         if value and isinstance(value, self.type):
             self.value = value
         elif value:
             raise ValueError("{value} is not a valid default for {name}.".format(value=value, name=self.__class__.__name__))
-        for k, v in kwargs.items():
-            setattr(self, k, v)
+
+    def update_instance_class_traits(self, instance):
+        if '__is_class' in instance.__class_traits:
+            cls_traits = {}.update(instance.__class_traits)
+            cls_traits.pop('__is_class', None)
+            instance.__class_traits = cls_traits
+
+    def set_default_value(self):
+        if not isinstance(self.value, dict):
+            self.value = {}
 
     def __get__(self, instance, owner):
-        return self.value
+        if instance:
+            if isinstance(instance, object):
+                self.update_instance_class_traits(instance)
+                return instance.__class_traits[self.label]
+            else:
+                return self.value[instance]
+        else:
+            return self.value[None]
     
     def __set__(self, instance, value):
         if isinstance(value, self.type):
-            self.value = value
+            if instance:
+                if isinstance(instance, object):
+                    self.update_instance_class_traits(instance)
+                    instance.__class_traits[self.label] = value
+                else:
+                    self.set_default_value()
+                    self.value[instance] = value
+            else:
+                self.set_default_value()
+                self.value[None] = value
         else:
             msg = "The '{attr_name}' attribute of '{class_name}' instance " \
                   "must be a {valid_types}. But an instance of {specified_type} " \
