@@ -14,8 +14,7 @@ import { HeroService } from './hero.service';
         <input type="text" [(ngModel)]="heroName" />
         <input type="number" [(ngModel)]="heroId" />
         <input type="button" value="Add Hero" (click)="addHero()" />
-    `,
-    providers: [ HeroService ]
+    `
 })
 export class AppComponent implements OnInit {
     name = 'Heros Application';
