@@ -4,9 +4,10 @@ import { Hero } from './hero.model';
 import  { HeroService } from './hero.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'hero-component',
     template: `
-    <div class="hero-component" (mouseenter)="setDetailsButtonVisibility(true)" (mouseleave)="setDetailsButtonVisibility(false)">
+    <div class="hero-component" *ngFor='let hero of heros' (mouseenter)="setDetailsButtonVisibility(true)" (mouseleave)="setDetailsButtonVisibility(false)">
         <p>ID: {{hero.id}}</p>
         <p>{{hero.name}}</p>
         <input type="button" value="Remove Hero" (click)="removeHero(hero)" />
@@ -24,11 +25,15 @@ import  { HeroService } from './hero.service';
     `]
 })
 export class HeroComponent {
-    @Input() hero:Hero;
     showDetailsButton:boolean = false;
     showDetails:boolean = false;
+    heros: Hero[];
 
     constructor(private heroService:HeroService) { }
+
+    ngOnInit() {
+        this.heros = this.heroService.getHeros();
+    }
 
     removeHero(hero:Hero) :void {
         this.heroService.removeHero(hero);

@@ -6,10 +6,11 @@ import { HeroComponent } from './hero.component';
 import { HeroService } from './hero.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'my-app',
     template: `
         <h1>{{name}}</h1>
-        <hero-component *ngFor='let hero of heros' [hero]="hero"></hero-component>
+        <router-outlet></router-outlet>
         <p>Create New Hero</p>
         <input type="text" [(ngModel)]="heroName" />
         <input type="number" [(ngModel)]="heroId" />

@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import { HeroComponent } from './hero.component';
+
+@NgModule({
+    imports: [
+        RouterModule.forRoot([
+            {
+                path: "heroes",
+                component: HeroComponent
+            }])
+    ]
+})
+export class RoutingModule { }
