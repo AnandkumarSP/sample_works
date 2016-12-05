@@ -35,7 +35,6 @@ export class HeroComponent {
 
     ngOnInit() {
         this.heros = this.heroService.getHeros();
-        console.log(this);
     }
 
     removeHero(hero: Hero): void {
