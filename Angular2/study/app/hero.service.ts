@@ -4,11 +4,7 @@ import { Hero } from './hero.model';
 
 @Injectable()
 export class HeroService {
-    heros:Hero[] = [{
-        id: 1,
-        name: 'Hero 1',
-        character: 'SUPERMAN'
-    }];
+    heros:Hero[] = [new Hero(1, 'Hero 1', 'SUPERMAN')];
 
     getHeros(): Hero[] {
         return this.heros;

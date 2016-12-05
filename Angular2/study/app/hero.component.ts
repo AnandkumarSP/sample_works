@@ -1,19 +1,21 @@
 import { Component, Input } from '@angular/core';
 
 import { Hero } from './hero.model';
-import  { HeroService } from './hero.service';
+import { HeroService } from './hero.service';
 
 @Component({
     moduleId: module.id,
     selector: 'hero-component',
     template: `
-    <div class="hero-component" *ngFor='let hero of heros' (mouseenter)="setDetailsButtonVisibility(true)" (mouseleave)="setDetailsButtonVisibility(false)">
+    <div class="hero-component" *ngFor='let hero of heros'
+            (mouseenter)="setDetailsButtonVisibility(hero)"
+            (mouseleave)="setDetailsButtonVisibility()">
         <p>ID: {{hero.id}}</p>
         <p>{{hero.name}}</p>
         <input type="button" value="Remove Hero" (click)="removeHero(hero)" />
-        <input type="button" [value]="showDetails ? 'Hide Details' : 'Show Details'"
-            *ngIf="showDetailsButton" (click)="toggleDetailsVisibility()" />
-        <div *ngIf="showDetails">
+        <input type="button" [value]="hero.showDetails ? 'Hide Details' : 'Show Details'"
+            *ngIf="hero === activeHero" (click)="hero.showDetails = !hero.showDetails" />
+        <div *ngIf="hero.showDetails">
             <p>Character: {{hero.character}}</p>
         </div>
     </div>
@@ -25,26 +27,22 @@ import  { HeroService } from './hero.service';
     `]
 })
 export class HeroComponent {
-    showDetailsButton:boolean = false;
-    showDetails:boolean = false;
     heros: Hero[];
+    activeHero: Hero;
+    showDetailsButton: boolean = false;
 
-    constructor(private heroService:HeroService) { }
+    constructor(private heroService: HeroService) { }
 
     ngOnInit() {
         this.heros = this.heroService.getHeros();
+        console.log(this);
     }
 
-    removeHero(hero:Hero) :void {
+    removeHero(hero: Hero): void {
         this.heroService.removeHero(hero);
     }
 
-    setDetailsButtonVisibility(show:boolean): void {
-        this.showDetailsButton = show;
-        if (!show) this.showDetails = false;
-    }
-
-    toggleDetailsVisibility(): void {
-        this.showDetails = !this.showDetails;
+    setDetailsButtonVisibility(hero: Hero): void {
+        this.activeHero = hero;
     }
 }

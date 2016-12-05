@@ -9,6 +9,11 @@ import { HeroComponent } from './hero.component';
             {
                 path: "heroes",
                 component: HeroComponent
+            },
+            {
+                path: "",
+                redirectTo: "/heroes",
+                pathMatch: "full"
             }])
     ]
 })

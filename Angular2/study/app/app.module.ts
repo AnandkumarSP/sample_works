@@ -11,7 +11,7 @@ import { HeroComponent } from './hero.component';
 import { HeroService } from './hero.service';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, RoutingModule],
+    imports: [BrowserModule, FormsModule, RouterModule, RoutingModule],
     declarations: [AppComponent, HeroComponent],
     providers: [HeroService],
     bootstrap: [AppComponent]
