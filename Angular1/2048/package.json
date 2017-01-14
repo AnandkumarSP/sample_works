@@ -1,0 +1,14 @@
+{
+  "name": "windchimes",
+  "version": "1.0.0",
+  "description": "Wind Chimes - Prototype",
+  "main": "index.html",
+  "window": {
+     "toolbar":true
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}

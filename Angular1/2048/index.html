@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <script src="./js/external/jquery.min.js"></script>
+    <script src="./js/external/angular.min.js"></script>
+    <script src="./js/app.js"></script>
+    <link rel="stylesheet" href="./css/app.css">
+</head>
+
+<body ng-app="wind_chimes" ng-controller="MainCtrl" ng-keyup="keypressed($event)">
+    <div style='display:flex;flex-direction:column;align-items:stretch;align-content:stretch;'>
+        <div style='display:flex;flex-direction:column;align-items:stretch;align-content:stretch;flex-grow:1;'>
+            <span>Score: {{score}}</span>
+            <table id='gaming_table'>
+                <tbody>
+                    <tr>
+                        <td>{{data[0][0] ? data[0][0] : ''}}</td>
+                        <td>{{data[0][1] ? data[0][1] : ''}}</td>
+                        <td>{{data[0][2] ? data[0][2] : ''}}</td>
+                        <td>{{data[0][3] ? data[0][3] : ''}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{data[1][0] ? data[1][0] : ''}}</td>
+                        <td>{{data[1][1] ? data[1][1] : ''}}</td>
+                        <td>{{data[1][2] ? data[1][2] : ''}}</td>
+                        <td>{{data[1][3] ? data[1][3] : ''}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{data[2][0] ? data[2][0] : ''}}</td>
+                        <td>{{data[2][1] ? data[2][1] : ''}}</td>
+                        <td>{{data[2][2] ? data[2][2] : ''}}</td>
+                        <td>{{data[2][3] ? data[2][3] : ''}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{data[3][0] ? data[3][0] : ''}}</td>
+                        <td>{{data[3][1] ? data[3][1] : ''}}</td>
+                        <td>{{data[3][2] ? data[3][2] : ''}}</td>
+                        <td>{{data[3][3] ? data[3][3] : ''}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div ng-show='!gameOver'>
+                                <div style='display:flex;flex-direction:column;justify-content:center;'>
+                                    <div style='flex-grow:1;align-self:center;width:50%;'>
+                                        <button ng-click='mergeUp()' style='width:100%;'>Up</button>
+                                    </div>
+                                    <div style='display:flex;flex-direction:row;justify-content:center;'>
+                                        <div style='flex-grow:1;'>
+                                            <button ng-click='mergeLeft()' style='width:100%;'>Left</button>
+                                        </div>
+                                        <div style='flex-grow:1;'>
+                                            <button ng-click='mergeRight()' style='width:100%;'>Right</button>
+                                        </div>
+                                    </div>
+                                    <div style='flex-grow:1;align-self:center;width:50%;'>
+                                        <button ng-click='mergeDown()' style='width:100%;'>Down</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show='gameOver'>
+                                <button ng-click='startNewGame()'>New Game</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
