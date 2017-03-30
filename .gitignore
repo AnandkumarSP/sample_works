@@ -48,5 +48,5 @@ Temporary Items
 
 #Angular2 Files
 node_modules/
-Angular2/*.js
+Angular2/**/testoutdir/**.js
 *.map
